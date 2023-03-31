@@ -46,6 +46,17 @@ function App() {
     // clear form state
     setCreateForm({ title: '', content: '' });
   };
+  const deletePost = async (_id) => {
+    // Delete the post
+    const res = await axios.delete(`http://localhost:3000/posts/${_id}`);
+
+    // update State
+    const newPosts = [...posts].filter((post) => {
+      return post._id !== _id;
+    });
+
+    setPosts(newPosts);
+  };
 
   return (
     <div className='App'>
@@ -56,6 +67,7 @@ function App() {
             <div key={post._id}>
               <div>Title: {post.title}</div>
               <div>Content: {post.content}</div>
+              <button onClick={() => deletePost(post._id)}>Delete Post</button>
             </div>
           );
         })}
