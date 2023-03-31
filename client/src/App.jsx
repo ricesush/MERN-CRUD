@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Posts } from './components/Posts';
+import { UpdatePost } from './components/UpdatePost';
+import { CreatePost } from './components/CreatePost';
 
 function App() {
   // States
@@ -113,65 +116,51 @@ function App() {
     });
   };
 
+  const createFormHandler = () => {
+    setCreateForm({
+      title: '',
+      content: '',
+    });
+
+    setShowCreatePostForm(false);
+  };
+
   return (
     <div className='App'>
       <button onClick={() => setShowCreatePostForm(true)}>+ Post</button>
       <section>
         <h2>Posts:</h2>
+
         {posts?.map((post) => {
           return (
-            <div key={post._id}>
-              <div>Title: {post.title}</div>
-              <div>Content: {post.content}</div>
-              <button onClick={() => deletePost(post._id)}>Delete Post</button>
-              <button onClick={() => onUpdatePost(post)}>Update Post</button>
-            </div>
+            <Posts
+              key={post._id}
+              title={post.title}
+              content={post.content}
+              onDelete={() => deletePost(post._id)}
+              onUpdate={() => onUpdatePost(post)}
+            />
           );
         })}
       </section>
 
       {updateForm._id && (
-        <section>
-          <h2>Update Post</h2>
-          <form onSubmit={updatePost}>
-            <input
-              onChange={updateFormFieldChangeHandler}
-              value={updateForm.title}
-              name='title'
-            />
-            <textarea
-              onChange={updateFormFieldChangeHandler}
-              value={updateForm.content}
-              name='content'
-              cols='30'
-              rows='10'
-            />
-            <button type='submit'>Save</button>
-          </form>
-        </section>
+        <UpdatePost
+          onSubmit={updatePost}
+          onChangeHandler={updateFormFieldChangeHandler}
+          titleValue={updateForm.title}
+          textAreaValue={updateForm.content}
+        />
       )}
 
       {showCreatePostForm && (
-        <section>
-          <h2>Create Note</h2>
-          <form onSubmit={createPost}>
-            <input
-              onChange={updateFormHandler}
-              value={createForm.title}
-              type='text'
-              name='title'
-            />
-            <textarea
-              onChange={updateFormHandler}
-              value={createForm.content}
-              name='content'
-              id=''
-              cols='30'
-              rows='10'
-            ></textarea>
-            <button type='submit'>Submit</button>
-          </form>
-        </section>
+        <CreatePost
+          onCreatePost={createPost}
+          onInputChange={updateFormHandler}
+          titleValue={createForm.title}
+          contentValue={createForm.content}
+          onCancel={createFormHandler}
+        />
       )}
     </div>
   );
