@@ -6,7 +6,7 @@ if (process.env.NODE_ENV != 'production') {
 //  Import dependencies
 const express = require('express');
 const connectToDb = require('./config/connectToDb');
-const Post = require('./models/post');
+const postController = require('./controllers/postControllers');
 
 // Create an express app
 const app = express();
@@ -22,15 +22,15 @@ app.get('/', (req, res) => {
   res.json({ hello: 'world' });
 });
 
-app.get('/posts');
+app.get('/posts', postController.fetchPosts);
 
-app.get('/posts/:id');
+app.get('/posts/:id', postController.fetchPost);
 
-app.post('/posts');
+app.post('/posts', postController.createPost);
 
-app.put('/posts/:id');
+app.put('/posts/:id', postController.updatePost);
 
-app.delete('/posts/:id');
+app.delete('/posts/:id', postController.deletePost);
 
 // Start our server
 app.listen(process.env.PORT);

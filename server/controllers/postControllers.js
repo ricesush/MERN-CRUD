@@ -6,7 +6,7 @@ const fetchPosts = async (req, res) => {
   res.json({ posts: posts });
 };
 
-const fetchPostById = async (req, res) => {
+const fetchPost = async (req, res) => {
   // Get id off the url
   const postId = req.params.id;
 
@@ -64,4 +64,12 @@ const deletePost = async (req, res) => {
 
   // respond
   res.json({ success: 'Succesfully deleted the post' });
+};
+
+module.exports = {
+  fetchPosts: fetchPosts,
+  fetchPost: fetchPost,
+  createPost: createPost,
+  updatePost: updatePost,
+  deletePost: deletePost,
 };
