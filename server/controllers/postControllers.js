@@ -5,7 +5,7 @@ const fetchPosts = async (req, res) => {
   const posts = await Post.find();
 
   // Respond with them
-  res.json({ posts: posts });
+  res.json({ posts });
 };
 
 const fetchPost = async (req, res) => {
@@ -21,8 +21,7 @@ const fetchPost = async (req, res) => {
 
 const createPost = async (req, res) => {
   // Get the sent in data off request body
-  const title = req.body.title;
-  const content = req.body.content;
+  const { title, content } = req.body;
 
   // Create a post
   const post = await Post.create({
@@ -31,7 +30,7 @@ const createPost = async (req, res) => {
   });
 
   // respond with the post
-  res.json({ post: post });
+  res.json({ post });
 };
 
 const updatePost = async (req, res) => {
@@ -39,8 +38,7 @@ const updatePost = async (req, res) => {
   const postId = req.params.id;
 
   // Get the data off the request body
-  const title = req.body.title;
-  const content = req.body.content;
+  const { title, content } = req.body;
 
   // find and update the record
   await Post.findByIdAndUpdate(postId, {
@@ -51,7 +49,7 @@ const updatePost = async (req, res) => {
   // find updated post
   const post = await Post.findById(postId);
 
-  res.json({ post: post });
+  res.json({ post });
 };
 
 const deletePost = async (req, res) => {
@@ -69,9 +67,9 @@ const deletePost = async (req, res) => {
 };
 
 module.exports = {
-  fetchPosts: fetchPosts,
-  fetchPost: fetchPost,
-  createPost: createPost,
-  updatePost: updatePost,
-  deletePost: deletePost,
+  fetchPosts,
+  fetchPost,
+  createPost,
+  updatePost,
+  deletePost,
 };
