@@ -22,73 +22,15 @@ app.get('/', (req, res) => {
   res.json({ hello: 'world' });
 });
 
-app.get('/posts', async (req, res) => {
-  // Find the notes
-  const posts = await Post.find();
+app.get('/posts');
 
-  // Respond with them
-  res.json({ posts: posts });
-});
+app.get('/posts/:id');
 
-app.get('/posts/:id', async (req, res) => {
-  // Get id off the url
-  const postId = req.params.id;
+app.post('/posts');
 
-  // Find the note using that id
-  const post = await Post.findById(postId);
+app.put('/posts/:id');
 
-  // Respond with the post
-  res.json({ posts: post });
-});
-
-app.post('/posts', async (req, res) => {
-  // Get the sent in data off request body
-  const title = req.body.title;
-  const content = req.body.content;
-
-  // Create a post
-  const post = await Post.create({
-    title: title,
-    content: content,
-  });
-
-  // respond with the post
-  res.json({ post: post });
-});
-
-app.put('/posts/:id', async (req, res) => {
-  // Get the id
-  const postId = req.params.id;
-
-  // Get the data off the request body
-  const title = req.body.title;
-  const content = req.body.content;
-
-  // find and update the record
-  await Post.findByIdAndUpdate(postId, {
-    title: title,
-    content: content,
-  });
-
-  // find updated post
-  const post = await Post.findById(postId);
-
-  res.json({ post: post });
-});
-
-app.delete('/posts/:id', async (req, res) => {
-  // get id url
-  const postId = req.params.id;
-
-  try {
-    await Post.findByIdAndDelete(postId);
-  } catch (e) {
-    console.log(e);
-  }
-
-  // respond
-  res.json({ success: 'Succesfully deleted the post' });
-});
+app.delete('/posts/:id');
 
 // Start our server
 app.listen(process.env.PORT);
