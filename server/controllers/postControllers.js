@@ -1,3 +1,5 @@
+const Post = require('../models/post');
+
 const fetchPosts = async (req, res) => {
   // Find the notes
   const posts = await Post.find();
