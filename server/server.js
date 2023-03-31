@@ -76,5 +76,19 @@ app.put('/posts/:id', async (req, res) => {
   res.json({ post: post });
 });
 
+app.delete('/posts/:id', async (req, res) => {
+  // get id url
+  const postId = req.params.id;
+
+  try {
+    await Post.findByIdAndDelete(postId);
+  } catch (e) {
+    console.log(e);
+  }
+
+  // respond
+  res.json({ success: 'Succesfully deleted the post' });
+});
+
 // Start our server
 app.listen(process.env.PORT);
