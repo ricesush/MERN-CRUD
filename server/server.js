@@ -1,20 +1,16 @@
-// Load env variables
-if (process.env.NODE_ENV != 'production') {
-  require('dotenv').config();
-}
-
 //  Import dependencies
 const express = require('express');
 const connectToDb = require('./config/connectToDb');
 const postController = require('./controllers/postControllers');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
-// Create an express app
+// Create our version of API
 const app = express();
 
-// Configure express app
-app.use(express.json());
-app.use(cors());
+// Middleware
+app.use(express.json()); /* converting all our request to JSON file */
+app.use(cors()); /*solving CORS issue when sending API request*/
 
 // Connec to database
 connectToDb();
@@ -35,4 +31,4 @@ app.put('/posts/:id', postController.updatePost);
 app.delete('/posts/:id', postController.deletePost);
 
 // Start our server
-app.listen(process.env.PORT);
+app.listen(3000, () => console.log('Server Started!'));
