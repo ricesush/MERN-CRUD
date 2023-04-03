@@ -12,6 +12,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 // Create our version of API
+const router = express.Router();
 const app = express();
 
 // Middleware
@@ -22,16 +23,18 @@ app.use(cors()); /*solving CORS issue when sending API request*/
 connectToDb();
 
 // Routing
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
   res.json({ hello: 'world' });
 });
 
-app
+// used route() to create a chaning code with the same path
+// routes for post
+router
   .route('/posts')
   .get(postController.fetchPosts)
   .post(postController.createPost);
 
-app
+router
   .route('/posts/:id')
   .get(postController.fetchPost)
   .put(postController.updatePost)
