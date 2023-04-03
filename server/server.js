@@ -1,3 +1,9 @@
+if (process.env.NODE_ENV != 'production') {
+  require('dotenv').config();
+}
+
+const port = process.env.PORT;
+
 //  Import dependencies
 const express = require('express');
 const connectToDb = require('./config/connectToDb');
@@ -20,15 +26,16 @@ app.get('/', (req, res) => {
   res.json({ hello: 'world' });
 });
 
-app.get('/posts', postController.fetchPosts);
+app
+  .route('/posts')
+  .get(postController.fetchPosts)
+  .post(postController.createPost);
 
-app.get('/posts/:id', postController.fetchPost);
-
-app.post('/posts', postController.createPost);
-
-app.put('/posts/:id', postController.updatePost);
-
-app.delete('/posts/:id', postController.deletePost);
+app
+  .route('/posts/:id')
+  .get(postController.fetchPost)
+  .put(postController.updatePost)
+  .delete(postController.deletePost);
 
 // Start our server
-app.listen(3000, () => console.log('Server Started!'));
+app.listen(port, () => console.log(`Server started running on port ${port}!`));
