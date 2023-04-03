@@ -7,38 +7,28 @@ const port = process.env.PORT;
 //  Import dependencies
 const express = require('express');
 const connectToDb = require('./config/connectToDb');
-const postController = require('./controllers/postControllers');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const postRoute = require('./routes/Posts');
 
 // Create our version of API
-const router = express.Router();
 const app = express();
 
 // Middleware
-app.use(express.json()); /* converting all our request to JSON file */
+/* Handles API / JSON request, converting to actual objects */
+app.use(express.json());
 app.use(cors()); /*solving CORS issue when sending API request*/
 
-// Connec to database
+// defines the common path for Posts route: postRoute
+app.use('/posts', postRoute);
+
+// Connect to database
 connectToDb();
 
-// Routing
-router.get('/', (req, res) => {
+// Handles root
+app.get('/', (req, res) => {
   res.json({ hello: 'world' });
 });
-
-// used route() to create a chaning code with the same path
-// routes for post
-router
-  .route('/posts')
-  .get(postController.fetchPosts)
-  .post(postController.createPost);
-
-router
-  .route('/posts/:id')
-  .get(postController.fetchPost)
-  .put(postController.updatePost)
-  .delete(postController.deletePost);
 
 // Start our server
 app.listen(port, () => console.log(`Server started running on port ${port}!`));
