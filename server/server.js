@@ -22,7 +22,7 @@ app.use(cors()); /*solving CORS issue when sending API request*/
 // defines the common path for Posts route: postRoute
 app.use('/posts', postRoute);
 
-// Connect to database
+// Establishing connection to database/mongoDB
 connectToDb();
 
 // Handles root
