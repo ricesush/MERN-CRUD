@@ -23,6 +23,11 @@ const createPost = async (req, res) => {
   // Get the sent in data off request body
   const { title, content } = req.body;
 
+  if (!title && !content) {
+    const posts = await Post.find();
+    return res.json({ posts });
+  }
+
   // Create a post
   const post = await Post.create({
     title: title,
