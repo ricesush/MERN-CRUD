@@ -1,6 +1,6 @@
-const Post = require('../models/post');
+import Post from '../models/post.js';
 
-const fetchPosts = async (req, res) => {
+export const fetchPosts = async (req, res) => {
   // Find the notes
   const posts = await Post.find();
 
@@ -8,7 +8,7 @@ const fetchPosts = async (req, res) => {
   res.json({ posts });
 };
 
-const fetchPost = async (req, res) => {
+export const fetchPost = async (req, res) => {
   // Get id off the url
   const postId = req.params.id;
 
@@ -19,7 +19,7 @@ const fetchPost = async (req, res) => {
   res.json({ posts: post });
 };
 
-const createPost = async (req, res) => {
+export const createPost = async (req, res) => {
   // Get the sent in data off request body
   const { title, content } = req.body;
 
@@ -38,7 +38,7 @@ const createPost = async (req, res) => {
   res.json({ post });
 };
 
-const updatePost = async (req, res) => {
+export const updatePost = async (req, res) => {
   // Get the id
   const postId = req.params.id;
 
@@ -57,7 +57,7 @@ const updatePost = async (req, res) => {
   res.json({ post });
 };
 
-const deletePost = async (req, res) => {
+export const deletePost = async (req, res) => {
   // get id url
   const postId = req.params.id;
 
@@ -69,12 +69,4 @@ const deletePost = async (req, res) => {
 
   // respond
   res.json({ success: 'Succesfully deleted the post' });
-};
-
-module.exports = {
-  fetchPosts,
-  fetchPost,
-  createPost,
-  updatePost,
-  deletePost,
 };

@@ -1,16 +1,14 @@
-if (process.env.NODE_ENV != 'production') {
-  require('dotenv').config();
-}
-
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 
 async function connectToDb() {
   try {
-    await mongoose.connect(process.env.DB_URL);
+    await mongoose.connect(process.env.DB_DATABASE);
     console.log('Connected to database');
   } catch (err) {
     console.log(err);
   }
 }
 
-module.exports = connectToDb;
+export default connectToDb;

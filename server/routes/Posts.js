@@ -1,18 +1,17 @@
-const express = require('express');
-const router = express.Router();
-const {
+import express from 'express';
+import {
   fetchPosts,
   fetchPost,
   createPost,
   updatePost,
   deletePost,
-} = require('../controllers/postControllers');
+} from '../controllers/postControllers.js';
 
-const app = express();
+const router = express.Router();
 
-app.use(express.json());
+// app.use(express.json());
 
 router.route('/').get(fetchPosts).post(createPost);
 router.route('/:id').get(fetchPost).put(updatePost).delete(deletePost);
 
-module.exports = router;
+export default router;
