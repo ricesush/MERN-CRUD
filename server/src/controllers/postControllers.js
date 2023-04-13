@@ -1,5 +1,5 @@
 // Importing dependecies
-import Post from '../models/post';
+import Post from '../models/post.js';
 
 // Defining the controllers
 
