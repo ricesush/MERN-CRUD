@@ -24,3 +24,14 @@ export const createPost = async (req, res) => {
   //  Responding with the created caht
   res.json({ post });
 };
+
+export const fetchPost = async (req, res) => {
+  // Getting the ID
+  const postId = req.params.id;
+
+  //   fetching the post
+  const post = await Post.findById(postId);
+
+  //   responding JSOn with fetched post
+  res.json({ post });
+};
