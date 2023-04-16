@@ -3,6 +3,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { connectToDb } from './config/connectToDb.js';
 import { postRouter } from './src/routes/Post.js';
+import cors from 'cors';
 
 // Importing ENV variables
 dotenv.config();
@@ -11,6 +12,8 @@ connectToDb();
 
 // Creating application level middleware
 const app = express();
+
+app.use(cors());
 
 // converting API requests to JSON file
 app.use(express.json());
