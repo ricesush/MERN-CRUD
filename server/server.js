@@ -12,10 +12,15 @@ connectToDb();
 // Creating application level middleware
 const app = express();
 
+// converting API requests to JSON file
+app.use(express.json());
+
 // Routing
 app.get('/', (req, res) => {
   res.json({ hello: 'world' });
 });
+
+app.use('/posts', postRouter);
 
 // Runing the server
 app.listen(process.env.PORT, () =>
