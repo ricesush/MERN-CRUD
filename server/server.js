@@ -2,6 +2,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import { connectToDb } from './config/connectToDb.js';
+import { postRouter } from './src/routes/Post.js';
 
 // Importing ENV variables
 dotenv.config();
