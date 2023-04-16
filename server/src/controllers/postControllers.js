@@ -54,3 +54,17 @@ export const updatePost = async (req, res) => {
   //   responding JSON file with the updated post
   res.json({ updatedPost });
 };
+
+export const deletePost = async (req, res) => {
+  // getting the id
+  const postId = req.params.id;
+
+  //   finding and deleteing the post
+  const post = await Post.findByIdAndDelete(postId);
+
+  //   fethching the new list
+  const newPostsList = await Post.find();
+
+  //   responding with json with the new list
+  res.json({ newPostsList });
+};
