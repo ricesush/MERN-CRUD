@@ -1,8 +1,8 @@
 // importing dependecies
-import { Post } from '../models/post';
+import { Post } from '../models/post.js';
 
 // Defining the controllers
-const createPost = async (req, res) => {
+export const createPost = async (req, res) => {
   // destructuring the data from req.body
   const { author, content } = req.body;
 
