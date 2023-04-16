@@ -1,9 +1,12 @@
 // Importing dependecies
 import express from 'express';
 import dotenv from 'dotenv';
+import { connectToDb } from './config/connectToDb.js';
 
 // Importing ENV variables
 dotenv.config();
+// Initializing the connection to database
+connectToDb();
 
 // Creating application level middleware
 const app = express();
