@@ -23,3 +23,14 @@ export const createPost = async (req, res) => {
   //   responding JSON file with the
   res.json({ post });
 };
+
+export const fetchPost = async (req, res) => {
+  // getting the ID
+  const postId = req.params.id;
+
+  //   finding the post with the id
+  const post = await Post.findById(postId);
+
+  //   responding with the json file
+  res.json({ post });
+};
