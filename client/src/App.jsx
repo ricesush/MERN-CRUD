@@ -8,6 +8,12 @@ function App() {
     content: '',
   });
 
+  const [updatePostForm, setUpdatePostForm] = useState({
+    _id: null,
+    author: '',
+    content: '',
+  });
+
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -29,6 +35,10 @@ function App() {
     );
 
     fetchPosts();
+    setCreatePostForm({
+      author: '',
+      content: '',
+    });
   };
 
   const createPostHandler = async (e) => {
@@ -42,6 +52,31 @@ function App() {
     });
   };
 
+  const updatePost = async (e) => {
+    e.preventDefault();
+    const post = await axios.put(
+      `http://localhost:3000/posts/${updatePostForm._id}`,
+      updatePostForm
+    );
+
+    fetchPosts();
+
+    setUpdatePostForm({
+      _id: null,
+      author: '',
+      content: '',
+    });
+  };
+
+  const updatePostFormHandler = async (e) => {
+    const { name, value } = e.target;
+
+    setUpdatePostForm({
+      ...updatePostForm,
+      [name]: value,
+    });
+  };
+
   return (
     <div className='App'>
       {posts?.map((post) => {
@@ -50,6 +85,10 @@ function App() {
             <div>Author: {post.author}</div>
             <div>{post.createdAt}</div>
             <div>{post.content}</div>
+            <button type='button' onClick={() => setUpdatePostForm(post)}>
+              Edit
+            </button>
+            <br />
           </div>
         );
       })}
@@ -75,6 +114,31 @@ function App() {
         <br />
         <button type='submit'>Post</button>
       </form>
+
+      <br />
+      {updatePostForm._id && (
+        <form onSubmit={updatePost}>
+          <label htmlFor='author'>Author: </label>
+          <input
+            type='text'
+            name='author'
+            id='author'
+            value={updatePostForm.author}
+            onChange={updatePostFormHandler}
+          />
+          <br />
+          <textarea
+            name='content'
+            id='content'
+            cols='30'
+            rows='3'
+            value={updatePostForm.content}
+            onChange={updatePostFormHandler}
+          ></textarea>
+          <br />
+          <button type='submit'>Save</button>
+        </form>
+      )}
     </div>
   );
 }
