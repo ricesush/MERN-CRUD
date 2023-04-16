@@ -77,6 +77,12 @@ function App() {
     });
   };
 
+  const deletePost = async (id) => {
+    const post = await axios.delete(`http://localhost:3000/posts/${id}`);
+
+    fetchPosts();
+  };
+
   return (
     <div className='App'>
       {posts?.map((post) => {
@@ -85,6 +91,9 @@ function App() {
             <div>Author: {post.author}</div>
             <div>{post.createdAt}</div>
             <div>{post.content}</div>
+            <button type='button' onClick={() => deletePost(post._id)}>
+              Delete
+            </button>
             <button type='button' onClick={() => setUpdatePostForm(post)}>
               Edit
             </button>
@@ -136,6 +145,12 @@ function App() {
             onChange={updatePostFormHandler}
           ></textarea>
           <br />
+          <button
+            type='button'
+            onClick={() => setUpdatePostForm({ ...updatePostForm, _id: null })}
+          >
+            Cancel
+          </button>
           <button type='submit'>Save</button>
         </form>
       )}
