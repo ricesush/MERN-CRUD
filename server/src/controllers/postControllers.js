@@ -29,3 +29,18 @@ export const fetchPost = async (req, res) => {
 
   res.json({ post });
 };
+
+export const updatePost = async (req, res) => {
+  const postId = req.params.id;
+
+  const { author, content } = req.body;
+
+  const post = await Post.findByIdAndUpdate(postId, {
+    author,
+    content,
+  });
+
+  const updatedPost = await Post.findById(postId);
+
+  res.json({ updatedPost });
+};
