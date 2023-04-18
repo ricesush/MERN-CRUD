@@ -21,3 +21,11 @@ export const createPost = async (req, res) => {
   //   responding with the json file
   res.json({ post });
 };
+
+export const fetchPost = async (req, res) => {
+  const postId = req.params.id;
+
+  const post = await Post.findById(postId);
+
+  res.json({ post });
+};
