@@ -28,5 +28,3 @@ try {
 } catch (error) {
   console.log(error);
 }
-
-// running the server
