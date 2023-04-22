@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -19,5 +20,13 @@ app.get('/', (req, res) => {
   res.json({ message: 'Hello' });
 });
 
+/*Connection to mongoDb*/
+try {
+  mongoose.connect(process.env.MONGODB_URL);
+  console.log('Connected to Mongo DB database!');
+  app.listen(PORT, () => console.log(`Server started at ${PORT}`));
+} catch (error) {
+  console.log(error);
+}
+
 // running the server
-app.listen(PORT, () => console.log(`Server started at ${PORT}`));
