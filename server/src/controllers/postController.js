@@ -12,4 +12,6 @@ export const createPost = async (req, res) => {
     title,
     content,
   });
+
+  res.json({ post });
 };
