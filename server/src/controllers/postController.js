@@ -3,10 +3,9 @@ import { Post } from '../models/post.js';
 export const allPosts = async (req, res) => {
   const posts = await Post.find();
 
-  if (!posts) {
-    return res.kson({ msg: 'No post found!' });
+  if (!posts.length) {
+    return res.json({ msg: 'No post found!' });
   }
-
   res.json(posts);
 };
 
@@ -62,5 +61,17 @@ export const updatePost = async (req, res) => {
   } catch (error) {
     res.json({ err: 'Failed to update the post!' });
     console.log({ error });
+  }
+};
+
+export const deletePost = async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    const post = await Post.findByIdAndDelete(postId);
+    res.json({ msg: 'Successfully deleted the post!' });
+  } catch (error) {
+    res.json({ err: 'Unable to delete the post!' });
+    console.log(error);
   }
 };
