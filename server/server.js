@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import { postRouter } from './src/routes/Post.js';
 
 dotenv.config();
 
@@ -14,6 +15,8 @@ app.use(cors());
 app.get((req, res) => {
   res.json({ msg: 'Hello' });
 });
+
+app.use('/posts', postRouter);
 
 try {
   mongoose.connect(process.env.MONGODB_URL);
