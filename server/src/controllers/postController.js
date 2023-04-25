@@ -1,5 +1,15 @@
 import { Post } from '../models/post.js';
 
+export const allPosts = async (req, res) => {
+  const posts = await Post.find();
+
+  if (!posts) {
+    return res.kson({ msg: 'No post found!' });
+  }
+
+  res.json(posts);
+};
+
 export const createPost = async (req, res) => {
   const { author, title, content } = req.body;
 
