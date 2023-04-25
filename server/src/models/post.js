@@ -14,7 +14,7 @@ const postSchema = new mongoose.Schema(
       min: 2,
       max: 20,
     },
-    author: {
+    content: {
       type: String,
       required: true,
       min: 5,
