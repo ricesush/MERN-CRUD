@@ -74,6 +74,12 @@ function App() {
     });
   };
 
+  const deletePost = async (id) => {
+    const post = await axios.delete(`http://localhost:3000/post/${id}`);
+
+    getPosts();
+  };
+
   return (
     <>
       <section>
@@ -152,6 +158,9 @@ function App() {
               <p>{post.content}</p>
               <button type='button' onClick={() => setUpdatePostForm(post)}>
                 Edit
+              </button>
+              <button type='button' onClick={() => deletePost(post._id)}>
+                Delete
               </button>
             </div>
           );
