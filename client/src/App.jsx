@@ -10,12 +10,19 @@ function App() {
     content: '',
   });
 
+  const [updatePostForm, setUpdatePostForm] = useState({
+    _id: null,
+    author: '',
+    title: '',
+    content: '',
+  });
+
   useEffect(() => {
     getPosts();
   }, []);
 
   const getPosts = async () => {
-    const res = await axios.get(API_URL);
+    const res = await axios.get('http://localhost:3000/post');
     setPosts(res.data.posts);
   };
 
@@ -31,12 +38,40 @@ function App() {
   const createPost = async (e) => {
     e.preventDefault();
     try {
-      const post = await axios.post(API_URL, createPostForm);
+      const post = await axios.post(
+        'http://localhost:3000/post',
+        createPostForm
+      );
     } catch (error) {
       console.log(error);
     }
 
     getPosts();
+  };
+
+  const updatePostFormHandler = (e) => {
+    const { name, value } = e.target;
+
+    setUpdatePostForm({
+      ...updatePostForm,
+      [name]: value,
+    });
+  };
+
+  const updatePost = async (e) => {
+    e.preventDefault();
+    const post = await axios.put(
+      `${API_URL}/${updatePostForm._id}`,
+      updatePostForm
+    );
+
+    getPosts();
+    setUpdatePostForm({
+      _id: null,
+      author: '',
+      title: '',
+      content: '',
+    });
   };
 
   return (
@@ -75,13 +110,49 @@ function App() {
         </form>
       </section>
       <section>
+        <h3>Update Post</h3>
+        <form onSubmit={updatePost}>
+          <label htmlFor='author'>Author: </label>
+          <input
+            type='text'
+            id='author'
+            name='author'
+            onChange={updatePostFormHandler}
+            value={updatePostForm.author}
+          />
+          <br /> <br />
+          <label htmlFor='title'>Title: </label>
+          <input
+            type='text'
+            id='title'
+            name='title'
+            onChange={updatePostFormHandler}
+            value={updatePostForm.title}
+          />
+          <br /> <br />
+          <textarea
+            name='content'
+            id='contentField'
+            cols='30'
+            rows='3'
+            onChange={updatePostFormHandler}
+            value={updatePostForm.content}
+          ></textarea>
+          <br />
+          <button type='submit'>Update Post</button>
+        </form>
+      </section>
+      <section>
         <h2>Posts</h2>
         {posts?.map((post) => {
           return (
-            <div>
+            <div key={post._id}>
               <div>Author: {post.author}</div>
               <div>Title: {post.title}</div>
               <p>{post.content}</p>
+              <button type='button' onClick={() => setUpdatePostForm(post)}>
+                Edit
+              </button>
             </div>
           );
         })}
