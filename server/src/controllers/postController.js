@@ -13,7 +13,15 @@ export const createPost = async (req, res) => {
 };
 
 export const getPosts = async (req, res) => {
-  const post = await Post.find();
+  const posts = await Post.find();
+
+  res.json({ posts });
+};
+
+export const getPost = async (req, res) => {
+  const postId = req.params.id;
+
+  const post = await Post.findById(postId);
 
   res.json({ post });
 };
