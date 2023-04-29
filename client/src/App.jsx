@@ -11,9 +11,7 @@ function App() {
 
   const getPosts = async () => {
     const res = await axios.get(API_URL);
-
-    console.log(res.data.posts);
-    // setPosts(posts.data.posts);
+    setPosts(res.data.posts);
   };
 
   return (
@@ -22,11 +20,11 @@ function App() {
         <h2>Posts</h2>
         {posts?.map((post) => {
           return (
-            <>
-              <div>{post.author}</div>
-              <div>{post.title}</div>
-              <div>{post.content}</div>
-            </>
+            <div>
+              <div>Author: {post.author}</div>
+              <div>Title: {post.title}</div>
+              <p>{post.content}</p>
+            </div>
           );
         })}
       </section>
