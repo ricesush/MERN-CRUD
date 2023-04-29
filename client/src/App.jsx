@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const API_URL = 'http://localhost:3000/post';
+  const [posts, setPosts] = useState(null);
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  const getPosts = async () => {
+    const res = await axios.get(API_URL);
+
+    console.log(res.data.posts);
+    // setPosts(posts.data.posts);
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <section>
+        <h2>Posts</h2>
+        {posts?.map((post) => {
+          return (
+            <>
+              <div>{post.author}</div>
+              <div>{post.title}</div>
+              <div>{post.content}</div>
+            </>
+          );
+        })}
+      </section>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
