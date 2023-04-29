@@ -25,3 +25,19 @@ export const getPost = async (req, res) => {
 
   res.json({ post });
 };
+
+export const updatePost = async (req, res) => {
+  const postId = req.params.id;
+
+  const { author, title, content } = req.body;
+
+  const post = await Post.findByIdAndUpdate(postId, {
+    author,
+    title,
+    content,
+  });
+
+  const updatedPost = await Post.findById(postId);
+
+  res.json({ updatedPost });
+};
