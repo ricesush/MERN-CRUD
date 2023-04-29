@@ -11,3 +11,9 @@ export const createPost = async (req, res) => {
 
   res.json({ msg: `Post has been successfully created!` });
 };
+
+export const getPosts = async (req, res) => {
+  const post = await Post.find();
+
+  res.json({ post });
+};
